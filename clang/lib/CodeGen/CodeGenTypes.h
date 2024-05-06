@@ -156,6 +156,8 @@ public:
   /// gets assigned to a class.
   void RefreshTypeCacheForClass(const CXXRecordDecl *RD);
 
+  CanQualType getCXXStructorReturnType(GlobalDecl GD);
+
   // The arrangement methods are split into three families:
   //   - those meant to drive the signature and prologue/epilogue
   //     of a function declaration or definition,

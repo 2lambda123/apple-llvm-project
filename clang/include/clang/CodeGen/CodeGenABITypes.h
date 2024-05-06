@@ -86,6 +86,8 @@ const CGFunctionInfo &arrangeFreeFunctionCall(CodeGenModule &CGM,
 ImplicitCXXConstructorArgs
 getImplicitCXXConstructorArgs(CodeGenModule &CGM, const CXXConstructorDecl *D);
 
+CanQualType getCXXStructorReturnType(CodeGenModule &CGM, GlobalDecl GD);
+
 llvm::Value *
 getCXXDestructorImplicitParam(CodeGenModule &CGM, llvm::BasicBlock *InsertBlock,
                               llvm::BasicBlock::iterator InsertPoint,

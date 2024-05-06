@@ -316,6 +316,22 @@ bool CodeGenTypes::inheritingCtorHasParams(
          !Target.getCXXABI().hasConstructorVariants();
 }
 
+CanQualType CodeGenTypes::getCXXStructorReturnType(GlobalDecl GD) {
+  if (TheCXXABI.HasThisReturn(GD)) {
+    auto *MD = cast<CXXMethodDecl>(GD.getDecl());
+    const CXXRecordDecl *ThisType = TheCXXABI.getThisArgumentTypeForMethod(GD);
+    return DeriveThisType(ThisType, MD);
+  }
+
+  return TheCXXABI.hasMostDerivedReturn(GD) ? CGM.getContext().VoidPtrTy
+                                            : Context.VoidTy;
+}
+
+CanQualType CodeGen::getCXXStructorReturnType(CodeGenModule &CGM,
+                                              GlobalDecl GD) {
+  return CGM.getTypes().getCXXStructorReturnType(GD);
+}
+
 const CGFunctionInfo &
 CodeGenTypes::arrangeCXXStructorDeclaration(GlobalDecl GD) {
   auto *MD = cast<CXXMethodDecl>(GD.getDecl());
