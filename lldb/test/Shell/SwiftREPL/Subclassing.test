@@ -1,9 +1,6 @@
 // Test that subclassing works in the repl.
 // REQUIRES: swift
 
-// rdar://127673408
-// UNSUPPORTED: system-linux && target-aarch64
-
 // RUN: %lldb --repl < %s | FileCheck %s
 
 class A {init(a: Int) {}}

@@ -2,9 +2,6 @@
 // Note: All of this should work on all supported platforms.
 // REQUIRES: swift
 
-// rdar://127673408
-// UNSUPPORTED: system-linux && target-aarch64
-
 // RUN: %lldb --repl < %s | FileCheck %s
 
 type(of: 1)

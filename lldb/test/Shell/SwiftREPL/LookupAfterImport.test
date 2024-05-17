@@ -2,9 +2,6 @@
 // rdar://64040436
 // REQUIRES: swift
 
-// rdar://127673408
-// UNSUPPORTED: system-linux && target-aarch64
-
 // RUN: rm -rf %t
 // RUN: mkdir %t
 // RUN: %target-swiftc -emit-library %S/Inputs/A.swift -module-name A -emit-module-path %t/A.swiftmodule -o %t/libA%target-shared-library-suffix

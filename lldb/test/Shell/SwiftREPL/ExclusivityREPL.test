@@ -1,9 +1,6 @@
 // Runtime checks for exclusive access should be enabled in the REPL.
 // REQUIRES: swift
 
-// rdar://127673408
-// UNSUPPORTED: system-linux && target-aarch64
-
 // RUN: %lldb --repl < %s 2>&1 | FileCheck %s
 // CHECK-DAG: modification requires exclusive access
 // CHECK-DAG: Execution interrupted

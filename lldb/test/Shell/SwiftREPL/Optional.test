@@ -1,9 +1,6 @@
 // RUN: %lldb --repl < %s | FileCheck %s
 // REQUIRES: swift
 
-// rdar://127673408
-// UNSUPPORTED: system-linux && target-aarch64
-
 enum Patatino {
   case first
   case second
