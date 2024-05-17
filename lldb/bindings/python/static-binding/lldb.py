@@ -5571,7 +5571,7 @@ class SBExpressionOptions(object):
     def SetLanguage(self, *args):
         r"""
         SetLanguage(SBExpressionOptions self, lldb::LanguageType language)
-        SetLanguage(SBExpressionOptions self, SBSourceLanguageName name, uint32_t version)
+        SetLanguage(SBExpressionOptions self, lldb::SBSourceLanguageName name, uint32_t version)
         Sets the language that LLDB should assume the expression is written in
         """
         return _lldb.SBExpressionOptions_SetLanguage(self, *args)
