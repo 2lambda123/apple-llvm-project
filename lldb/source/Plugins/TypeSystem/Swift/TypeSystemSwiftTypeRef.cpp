@@ -3265,8 +3265,8 @@ lldb::Encoding TypeSystemSwiftTypeRef::GetEncoding(opaque_compiler_type_t type,
       return referent_type.GetEncoding(count);
     }
     default:
-      LLDB_LOGF(GetLog(LLDBLog::Types), "No encoding for type %s",
-                AsMangledName(type));
+      LLDB_LOGF(GetLog(LLDBLog::Types), "No encoding for type %s of kind %s",
+                AsMangledName(type), getNodeKindString(kind));
       break;
     }
 
