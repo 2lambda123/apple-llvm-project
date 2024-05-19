@@ -619,6 +619,17 @@ ifeq "$(USESWIFTDRIVER)" "1"
 endif
 
 #----------------------------------------------------------------------
+# Set the clang that Swift uses for linking
+#----------------------------------------------------------------------
+ifeq "$(SWIFT_DRIVER_CLANG_EXEC)" ""
+	export SWIFT_DRIVER_CLANG_EXEC = $(CC)
+endif
+
+ifeq "$(SWIFT_DRIVER_CLANGXX_EXEC)" ""
+	export SWIFT_DRIVER_CLANGXX_EXEC = $(CXX)
+endif
+
+#----------------------------------------------------------------------
 # Check if we need the Swift/ObjC interop features
 #----------------------------------------------------------------------
 ifeq "$(SWIFT_OBJC_INTEROP)" "1"
@@ -726,12 +737,16 @@ ifneq "$(SWIFT_WMO)" "1"
 endif
 	@echo "### Compiling" $^
 	@echo "### Swift driver expanded incovation will be:"
+	SWIFT_DRIVER_CLANG_EXEC=$(SWIFT_DRIVER_CLANG_EXEC) \
+	SWIFT_DRIVER_CLANGXX_EXEC=$(SWIFT_DRIVER_CLANGXX_EXEC) \
 	$(SWIFTC) -emit-object $^ $(SWIFTC_OUTPUT) \
 	  $(SWIFTFLAGS) $(SWIFT_HFLAGS) $(PARSE_AS_LIBRARY) \
 	  -module-name $(MODULENAME) \
           -emit-module-path $(BUILDDIR)/$(MODULENAME).swiftmodule \
 	  $(SWIFT_INTERFACE_FLAGS) -###
 	@echo "### Swift driver invocation:"
+	SWIFT_DRIVER_CLANG_EXEC=$(SWIFT_DRIVER_CLANG_EXEC) \
+	SWIFT_DRIVER_CLANGXX_EXEC=$(SWIFT_DRIVER_CLANGXX_EXEC) \
 	$(SWIFTC) -emit-object $^ $(SWIFTC_OUTPUT) \
 	  $(SWIFTFLAGS) $(SWIFT_HFLAGS) $(PARSE_AS_LIBRARY) \
 	  -module-name $(MODULENAME) \
@@ -769,6 +784,8 @@ LD_SWIFTFLAGS =
 endif
 $(EXE): $(OBJECTS)
 	@echo "### Linking" $(EXE)
+	SWIFT_DRIVER_CLANG_EXEC=$(SWIFT_DRIVER_CLANG_EXEC) \
+	SWIFT_DRIVER_CLANGXX_EXEC=$(SWIFT_DRIVER_CLANGXX_EXEC) \
 	$(SWIFTC) $(LD_EXTRAS) $(LD_SWIFTFLAGS) $(OBJECTS) $(patsubst -g,,$(SWIFTFLAGS)) -o "$(EXE)"
 ifneq "$(CODESIGN)" ""
 	$(CODESIGN) -s - "$(EXE)"
@@ -783,6 +800,8 @@ endif
 
 $(EXE): $(OBJECTS)
 	@echo "### Linking" $(EXE)
+	SWIFT_DRIVER_CLANG_EXEC=$(SWIFT_DRIVER_CLANG_EXEC) \
+	SWIFT_DRIVER_CLANGXX_EXEC=$(SWIFT_DRIVER_CLANGXX_EXEC) \
 	$(SWIFTC) $(LD_EXTRAS) $(LD_SWIFTFLAGS) $(WRAPPED_SWIFTMODULE) $^ $(patsubst -g,,$(SWIFTFLAGS)) -o "$(EXE)"
 ifneq "$(HIDE_SWIFTMODULE)" ""
 	rm -f $(MODULENAME).swiftmodule
@@ -863,6 +882,8 @@ endif
 	(cd $(FRAMEWORK).framework/; ln -sf Versions/A/Resources Resources)
 	(cd $(FRAMEWORK).framework/; ln -sf Versions/A/$(FRAMEWORK) $(FRAMEWORK))
 endif
+	SWIFT_DRIVER_CLANG_EXEC=$(SWIFT_DRIVER_CLANG_EXEC) \
+	SWIFT_DRIVER_CLANGXX_EXEC=$(SWIFT_DRIVER_CLANGXX_EXEC) \
 	$(SWIFTC) $(patsubst -g,,$(SWIFTFLAGS)) \
             -emit-library $(DYLIB_SWIFT_FLAGS) -o $@ $(DYLIB_OBJECTS)
 ifneq "$(CODESIGN)" ""
