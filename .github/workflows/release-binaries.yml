@@ -43,7 +43,7 @@ jobs:
 
     steps:
     - name: Checkout LLVM
-      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
     - name: Install Dependencies
       run: |
@@ -89,7 +89,7 @@ jobs:
     if: github.repository == 'llvm/llvm-project'
     steps:
     - name: Checkout LLVM
-      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         ref: ${{ needs.prepare.outputs.ref }}
 
